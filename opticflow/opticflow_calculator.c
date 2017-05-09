@@ -149,7 +149,8 @@ void opticflow_calc_init(struct opticflow_t *opticflow, uint16_t w, uint16_t h)
  * @param[in] *img The image frame to calculate the optical flow from
  * @param[out] *result The optical flow result
  */
-void opticflow_calc_frame(struct opticflow_t *opticflow, struct opticflow_state_t *state, struct image_t *img, struct opticflow_result_t *result)
+//void opticflow_calc_frame(struct opticflow_t *opticflow, struct opticflow_state_t *state, struct image_t *img, struct opticflow_result_t *result)
+void opticflow_calc_frame(struct opticflow_t *opticflow, struct image_t *img, struct opticflow_result_t *result)
 {
   // Update FPS for information
   result->fps = 1 / (timeval_diff(&opticflow->prev_timestamp, &img->ts) / 1000.);
@@ -176,11 +177,10 @@ void opticflow_calc_frame(struct opticflow_t *opticflow, struct opticflow_state_
   if (opticflow->fast9_adaptive) {
 
     // Decrease and increase the threshold based on previous values
-    if (result->corner_cnt < 40 && opticflow->fast9_threshold > 5) {
+    if (result->corner_cnt < 40 && opticflow->fast9_threshold > 5)
       opticflow->fast9_threshold--;
-    } else if (result->corner_cnt > 50 && opticflow->fast9_threshold < 60) {
+    else if (result->corner_cnt > 50 && opticflow->fast9_threshold < 60)
       opticflow->fast9_threshold++;
-    }
   }
 
 #if OPTICFLOW_DEBUG && OPTICFLOW_SHOW_CORNERS
@@ -230,6 +230,7 @@ void opticflow_calc_frame(struct opticflow_t *opticflow, struct opticflow_state_
     result->flow_y = vectors[result->tracked_cnt / 2].flow_y;
   }
 
+/*
   // Flow Derotation
   float diff_flow_x = (state->phi - opticflow->prev_phi) * img->w / OPTICFLOW_FOV_W;
   float diff_flow_y = (state->theta - opticflow->prev_theta) * img->h / OPTICFLOW_FOV_H;
@@ -239,8 +240,11 @@ void opticflow_calc_frame(struct opticflow_t *opticflow, struct opticflow_state_
   opticflow->prev_theta = state->theta;
 
   // Velocity calculation
-  result->vel_x = -result->flow_der_x * result->fps * state->agl/ opticflow->subpixel_factor * img->w / OPTICFLOW_FX;
-  result->vel_y =  result->flow_der_y * result->fps * state->agl/ opticflow->subpixel_factor * img->h / OPTICFLOW_FY;
+  //result->vel_x = -result->flow_der_x * result->fps * state->agl/ opticflow->subpixel_factor * img->w / OPTICFLOW_FX;
+  //result->vel_y =  result->flow_der_y * result->fps * state->agl/ opticflow->subpixel_factor * img->h / OPTICFLOW_FY;
+*/
+  result->vel_x = -result->fps / opticflow->subpixel_factor * img->w / OPTICFLOW_FX;
+  result->vel_y = result->fps / opticflow->subpixel_factor * img->h / OPTICFLOW_FY;
 
   // *************************************************************************************
   // Next Loop Preparation

@@ -29,16 +29,17 @@
 #ifndef _INTER_THREAD_DATA_H
 #define _INTER_THREAD_DATA_H
 
+
 /* The result calculated from the opticflow */
 struct opticflow_result_t {
   float fps;              ///< Frames per second of the optical flow calculation
   uint16_t corner_cnt;    ///< The amount of coners found by FAST9
   uint16_t tracked_cnt;   ///< The amount of tracked corners
 
-  int16_t flow_x;         ///< Flow in x direction from the camera (in subpixels)
-  int16_t flow_y;         ///< Flow in y direction from the camera (in subpixels)
-  int16_t flow_der_x;     ///< The derotated flow calculation in the x direction (in subpixels)
-  int16_t flow_der_y;     ///< The derotated flow calculation in the y direction (in subpixels)
+  uint16_t flow_x;         ///< Flow in x direction from the camera (in subpixels)
+  int flow_y;         ///< Flow in y direction from the camera (in subpixels)
+  int flow_der_x;     ///< The derotated flow calculation in the x direction (in subpixels)
+  int flow_der_y;     ///< The derotated flow calculation in the y direction (in subpixels)
 
   float vel_x;            ///< The velocity in the x direction
   float vel_y;            ///< The velocity in the y direction
