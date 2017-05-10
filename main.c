@@ -4,7 +4,6 @@
 #include <string.h>
 #include <string.h>
 #include "include/header.h"
-
 #include "opticflow/opticflow_module.h"
 #include "opticflow/opticflow_calculator.h"
 

@@ -21,7 +21,7 @@
 
 /**
  * @file modules/computer_vision/opticflow/opticflow_calculator.c
- * @brief Estimate velocity from optic flow(从光流估计速度).
+ * @brief Estimate velocity from optic flow
  *
  * Using images from a vertical camera and IMU sensor data(使用垂直镜头和IMU传感器采集的数据).
  */

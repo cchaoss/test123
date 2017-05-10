@@ -2,10 +2,8 @@
 #include <string.h>
 #include <pthread.h>
 #include "../include/header.h"
-#include "../serial/serial_.h"
 #include "../lib/v4l/v4l2.h"
 #include "../lib/encoding/jpeg.h"
-#include "../lib/encoding/rtp.h"
 #include "opticflow_module.h"
 #include "opticflow_calculator.h"
 
@@ -162,6 +160,7 @@ static void *opticflow_module_calc(void *data __attribute__((unused)))
 		printf("[opticflow_module] Could not start capture of the camera\n");
 		return 0;
 	}
+	//else printf("start ok"); 
 
 	// Main loop of the optical flow calculation
 	while(1) {
@@ -180,7 +179,7 @@ static void *opticflow_module_calc(void *data __attribute__((unused)))
 		//printf("opticflow_result_t.flow_y      : %d\n", temp_result.flow_y);
 		//printf("opticflow_result_t.flow_der_x  : %d\n", temp_result.flow_der_x);
 		//printf("opticflow_result_t.flow_der_y  : %d\n", temp_result.flow_der_y);
-		//printf("opticflow_result_t.vel_x       : %f\n", temp_result.vel_x);
+		printf("opticflow_result_t.vel_x       : %f\n", temp_result.vel_x);
 		//printf("opticflow_result_t.vel_y       : %f\n", temp_result.vel_y);
 		//printf("-------------------------opticflow_result_t----------------------\n");
 		//printf("vel_x       : %f             vel_y: %f\n", temp_result.vel_x, temp_result.vel_y);

@@ -62,7 +62,7 @@ static void *v4l2_capture_thread(void *data)
     FD_SET(dev->fd, &fds);
 
     // Set the timeout to 2 seconds
-    tv.tv_sec = 4;
+    tv.tv_sec = 2;
     tv.tv_usec = 0;
 
     // Wait until an image was taken, with a timeout of tv
@@ -137,14 +137,14 @@ bool_t v4l2_init_subdev(char *subdev_name, uint8_t pad, uint8_t which, uint16_t 
   if (fd < 0) {
     printf("[v4l2] Cannot open subdevice '%s': %d, %s\n", subdev_name, errno, strerror(errno));
     return FALSE;
-  }
+  }else printf("[v4l2] open subdevice");
 
   // Try to get the subdevice data format settings
   if (ioctl(fd, VIDIOC_SUBDEV_G_FMT, &sfmt) < 0) {
     printf("[v4l2] Could not get subdevice data format settings of %s\n", subdev_name);
     close(fd);
     return FALSE;
-  }
+  }else printf("[v4l2] get subdevice data format settings");
 
   // Set the new settings
   sfmt.pad = pad;
@@ -159,7 +159,7 @@ bool_t v4l2_init_subdev(char *subdev_name, uint8_t pad, uint8_t which, uint16_t 
     printf("[v4l2] Could not set subdevice data format settings of %s\n", subdev_name);
     close(fd);
     return FALSE;
-  }
+  }else printf("[v4l2] set subdevice data format settings");
 
   // Close the device
   close(fd);
