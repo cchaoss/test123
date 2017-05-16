@@ -3,9 +3,9 @@ CC = gcc
 #Options for development
 CFLAGS = -g -Wall
 
-VPATH = include:lib/encoding:lib/v4l:lib/vision:opticflow
+VPATH = lib/encoding:lib/v4l:lib/vision:opticflow:include:serial
 
-obj = main.o opticflow_module.o opticflow_calculator.o \
+obj = main.o opticflow_module.o opticflow_calculator.o serial.o\
 			v4l2.o jpeg.o image.o lucas_kanade.o fast_rosten.o
 
 flow:$(obj)
@@ -14,6 +14,8 @@ flow:$(obj)
 #$(CC) -o flow $(obj) -lpthread
 
 main.o:opticflow_module.h header.h opticflow_calculator.h 
+
+serial.o:serial.h
 
 opticflow_module.o:v4l2.h jpeg.h opticflow_module.h header.h opticflow_calculator.h
 

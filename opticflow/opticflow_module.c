@@ -25,7 +25,7 @@
 #endif
 
 struct opticflow_t opticflow;                      // Opticflow calculations
-static struct opticflow_result_t opticflow_result; // The opticflow result
+struct opticflow_result_t opticflow_result; 
 static struct v4l2_device *opticflow_dev;          // The opticflow camera V4L2 device
 static pthread_t opticflow_calc_thread;            // The optical flow calculation thread
 static bool_t opticflow_got_result;                // When we have an optical flow calculation
@@ -179,7 +179,7 @@ static void *opticflow_module_calc(void *data __attribute__((unused)))
 		//printf("opticflow_result_t.flow_y      : %d\n", temp_result.flow_y);
 		//printf("opticflow_result_t.flow_der_x  : %d\n", temp_result.flow_der_x);
 		//printf("opticflow_result_t.flow_der_y  : %d\n", temp_result.flow_der_y);
-		printf("opticflow_result_t.vel_x       : %f\n", temp_result.vel_x);
+		//printf("opticflow_result_t.vel_x       : %f\n", temp_result.vel_x);
 		//printf("opticflow_result_t.vel_y       : %f\n", temp_result.vel_y);
 		//printf("-------------------------opticflow_result_t----------------------\n");
 		//printf("vel_x       : %f             vel_y: %f\n", temp_result.vel_x, temp_result.vel_y);

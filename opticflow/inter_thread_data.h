@@ -25,6 +25,7 @@
  * Data structures used to for inter-thread communication via Unix Domain sockets.
  */
 
+#include <stdint.h>
 
 #ifndef _INTER_THREAD_DATA_H
 #define _INTER_THREAD_DATA_H
@@ -36,7 +37,7 @@ struct opticflow_result_t {
   uint16_t corner_cnt;    ///< The amount of coners found by FAST9
   uint16_t tracked_cnt;   ///< The amount of tracked corners
 
-  uint16_t flow_x;         ///< Flow in x direction from the camera (in subpixels)
+  int flow_x;         ///< Flow in x direction from the camera (in subpixels)
   int flow_y;         ///< Flow in y direction from the camera (in subpixels)
   int flow_der_x;     ///< The derotated flow calculation in the x direction (in subpixels)
   int flow_der_y;     ///< The derotated flow calculation in the y direction (in subpixels)
