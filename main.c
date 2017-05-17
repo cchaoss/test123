@@ -15,7 +15,7 @@ uint8_t buf[6] = {0xAA,0,0,0,0,0};
 
 int main() {
 
-	int fd = 0;uint8_t i = 0;
+	int fd = 0;
 
 	fd = serial_open(fd, Serial_Name);
 	if(fd == false) 
@@ -28,20 +28,14 @@ int main() {
 
 	while(1) {
 		opticflow_module_run();
-		
-		if(i > 5) {
-			i = 0;
-			opticflow_result.flow_x = 93;
-			opticflow_result.flow_y = -14;
-			memcpy(&buf[1],&opticflow_result.flow_x,2);
-			memcpy(&buf[3],&opticflow_result.flow_y,2);
-			buf[5] = (buf[1]^buf[2]^buf[3]^buf[4])&0xFF;
-		}
-		printf(" buf[1]:%d\n,buf[2]:%d\n,buf[3]:%d\n,buf[4]:%d\n",buf[1],buf[2],buf[3],buf[4]);		
-		write(fd, &buf[i], 1);
-		i++;
+	
+		memcpy(&buf[1],&opticflow_result.flow_x,2);
+		memcpy(&buf[3],&opticflow_result.flow_y,2);
+		buf[5] = (buf[1]^buf[2]^buf[3]^buf[4])&0xFF;
+		//printf(" buf[1]:%d\n,buf[2]:%d\n,buf[3]:%d\n,buf[4]:%d\n",buf[1],buf[2],buf[3],buf[4]);		
+		write(fd, buf, 6);
 
-		usleep(200000);
+		usleep(10000);//100hz
 	}
 
 	opticflow_module_stop();
