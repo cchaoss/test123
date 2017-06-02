@@ -75,6 +75,7 @@ int serial_init(int fd)
 	newset.c_cflag &= ~CSTOPB;  //停止位1
 	//设置串口baud输入-> int cfsetispeed(struct termios *, speed_t speed);
 	//			  输出-> int cfsetospeed(struct termios *, speed_t speed);
+
 	cfsetispeed(&newset, B57600); //波特率57600
 	cfsetospeed(&newset, B57600);
 

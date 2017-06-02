@@ -14,7 +14,7 @@
 
 
 #ifndef OPTICFLOW_DEVICE_SIZE
-#define OPTICFLOW_DEVICE_SIZE 320,240     // The video device size (width, height)
+#define OPTICFLOW_DEVICE_SIZE 180,180     // The video device size (width, height)
 #endif
 #define __SIZE_HELPER(x, y) #x", "#y
 #define _SIZE_HELPER(x) __SIZE_HELPER(x)
@@ -32,7 +32,7 @@ static bool_t opticflow_got_result;                // When we have an optical fl
 static pthread_mutex_t opticflow_mutex;            // Mutex lock fo thread safety
 
 
-#define MEDIAN_DATASIZE 5
+#define MEDIAN_DATASIZE 10
 struct MedianFilterInt {
 	float data[MEDIAN_DATASIZE], sortData[MEDIAN_DATASIZE];
 	int8_t dataIndex;
@@ -61,9 +61,8 @@ float update_median_filter(struct MedianFilterInt *filter, float new_data)
 {
 	int temp, i, j;
 
-	//速度限幅 (cm/s)
-	if (new_data > 1500) new_data = 1500;
-	else if(new_data < -1500) new_data = -1500;
+	if (new_data > 120) new_data = 120;
+	else if(new_data < -120) new_data = -120;
 
 	filter->data[filter->dataIndex] = new_data;
 
@@ -95,7 +94,7 @@ void opticflow_module_init(void)
 	init_median_filter(&median_vy);
 
 	// Initialize the opticflow calculation
-	opticflow_calc_init(&opticflow, 320, 240);
+	opticflow_calc_init(&opticflow, 180, 180);
 	opticflow_got_result = FALSE;
 
 	//Try to initialize the video device 
@@ -108,18 +107,21 @@ void opticflow_module_init(void)
 
 //Update the optical flow state for the calculation thread
 
-void opticflow_module_run(void)
+bool opticflow_module_run(void)
 {
-
+	bool x = opticflow_got_result;
 	pthread_mutex_lock(&opticflow_mutex);
 	if (opticflow_got_result) {
-		opticflow_result.vel_x = update_median_filter(&median_vx, opticflow_result.vel_x);
-		opticflow_result.vel_y = update_median_filter(&median_vy, opticflow_result.vel_y);
+		opticflow_result.flow_x = update_median_filter(&median_vx, opticflow_result.flow_x);
+		opticflow_result.flow_y = update_median_filter(&median_vy, opticflow_result.flow_y);
+		//opticflow_result.vel_x = update_median_filter(&median_vx, opticflow_result.vel_x);
+		//opticflow_result.vel_y = update_median_filter(&median_vy, opticflow_result.vel_y);
 		//printf("vel_x:%f\r,vel_y:%f\r\n", opticflow_result.vel_x, opticflow_result.vel_y);
 		//stabilization_opticflow_update(&opticflow_result);	//and update the stabilization loops with the newest result
 		opticflow_got_result = FALSE;
 	}
 	pthread_mutex_unlock(&opticflow_mutex);
+	return x;
 }
 
 

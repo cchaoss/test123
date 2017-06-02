@@ -134,7 +134,7 @@ void opticflow_calc_init(struct opticflow_t *opticflow, uint16_t w, uint16_t h)
   printf("opticflow->max_track_corners : %d\n", opticflow->max_track_corners);
   printf("opticflow->window_size       : %d\n", opticflow->window_size);
   printf("opticflow->subpixel_factor   : %d\n", opticflow->subpixel_factor);
-  printf("opticflow->max_iterations   : %d\n", opticflow->max_iterations);
+  printf("opticflow->max_iterations    : %d\n", opticflow->max_iterations);
   printf("opticflow->threshold_vec     : %d\n", opticflow->threshold_vec);
   printf("opticflow->fast9_adaptive    : %d\n", opticflow->fast9_adaptive);
   printf("opticflow->fast9_threshold   : %d\n", opticflow->fast9_threshold);

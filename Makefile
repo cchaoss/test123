@@ -1,7 +1,7 @@
 #which compiler
 CC = gcc
 #Options for development
-CFLAGS = -g -Wall
+CFLAGS = -g -Wall -std=gnu99
 
 VPATH = lib/encoding:lib/v4l:lib/vision:opticflow:include:serial
 
